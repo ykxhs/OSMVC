@@ -44,47 +44,45 @@ args = parser.parse_args()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # The code has been optimized.
 # The seed was fixed for the performance reproduction, which was higher than the values shown in the paper.
-if args.dataset == "MNIST-USPS": # ok
+if args.dataset == "MNIST-USPS":
     args.mse_epochs = 100
     args.con_epochs = 50
     seed = 10
-if args.dataset == "BDGP": # ok
+if args.dataset == "BDGP":
     args.feature_dim = 256
     args.mse_epochs = 250
     args.con_epochs = 20
     seed = 5
-if args.dataset == "Caltech-2V":# ok
+if args.dataset == "Caltech-2V":
     args.feature_dim = 256
     args.mse_epochs = 100
     args.con_epochs = 150
     seed = 200
-if args.dataset == "Caltech-3V": # ok
+if args.dataset == "Caltech-3V": 
     # 200 150
     args.feature_dim = 256
     args.mse_epochs = 200
     args.con_epochs = 150
     seed = 5
-if args.dataset == "Caltech-4V": # ok
-    # 400 300
+if args.dataset == "Caltech-4V": 
     args.feature_dim = 256
     args.mse_epochs = 400
     args.con_epochs = 300
     seed = 10
 if args.dataset == "Caltech-5V":
-    args.feature_dim = 256
-    args.mse_epochs = 50
+    args.mse_epochs = 500
     args.con_epochs = 300
-    seed = 30
-if args.dataset == "Prokaryotic": # ok
+    seed = 1000
+if args.dataset == "Prokaryotic": 
     args.feature_dim = 256
     args.mse_epochs = 100
     args.con_epochs = 20
     seed = 10
-if args.dataset == "Cifar10": # ok
+if args.dataset == "Cifar10": 
     args.mse_epochs = 200
     args.con_epochs = 100
     seed = 5
-if args.dataset == "Cifar100": # ok
+if args.dataset == "Cifar100": 
     args.mse_epochs = 200
     args.con_epochs = 45
     seed = 10

@@ -16,7 +16,7 @@ from dataloader import load_data
 Dataname = 'BDGP'
 parser = argparse.ArgumentParser(description='test')
 parser.add_argument('--dataset', default=Dataname)
-parser.add_argument('--data_path', default="D:/cyy/dataset/MVC_data") # 数据存放位置
+parser.add_argument('--data_path', default="./data") # 数据存放位置
 parser.add_argument('--batch_size', default=256, type=int)
 parser.add_argument("--temperature_l", default=1.0)
 parser.add_argument("--learning_rate", default=0.0003)

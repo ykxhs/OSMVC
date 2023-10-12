@@ -58,7 +58,7 @@ class Network(nn.Module):
         self.view = view
         self.encoders = []
         self.decoders = []
-        self.As = []
+        self.As = nn.ParameterList()
         for v in range(view):
             self.encoders.append(Encoder(input_size[v], feature_dim).to(device))
             self.decoders.append(Decoder(input_size[v], feature_dim).to(device))
@@ -85,12 +85,9 @@ class Network(nn.Module):
         P = self.target_distribution(t)
         Qs = []
         for v in range(self.view):
-            # q = 1.0 / (1.0 + torch.sum(torch.pow(Zs[v].unsqueeze(1) - self.As[v], 2), 2) / self.alpha)
-            # q = q.pow((self.alpha + 1.0) / 2.0)
-            # q = (q.t() / torch.sum(q, 1)).t()
-            q = 1.0 / (1.0 + torch.sum((Zs[v].unsqueeze(1) - self.As[v]) ** 2, dim=2) / self.alpha)
-            q = q ** (self.alpha + 1.0) / 2.0
-            q = q / torch.sum(q, dim=1, keepdim=True)
+            q = 1.0 / (1.0 + torch.sum(torch.pow(Zs[v].unsqueeze(1) - self.As[v], 2), 2) / self.alpha)
+            q = q.pow((self.alpha + 1.0) / 2.0)
+            q = (q.t() / torch.sum(q, 1)).t()
             Qs.append(q)
         return X_hat, Cs, P, Qs, Ss
 

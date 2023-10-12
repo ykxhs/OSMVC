@@ -58,7 +58,7 @@ class Network(nn.Module):
         self.view = view
         self.encoders = []
         self.decoders = []
-        self.As = nn.ParameterList()
+        self.As = []
         for v in range(view):
             self.encoders.append(Encoder(input_size[v], feature_dim).to(device))
             self.decoders.append(Decoder(input_size[v], feature_dim).to(device))

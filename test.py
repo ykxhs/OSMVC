@@ -7,13 +7,13 @@ from dataloader import load_data
 # MNIST-USPS
 # BDGP .
 # Caltech-2V
-# Caltech-3V .
+# Caltech-3V
 # Caltech-4V
-# Caltech-5V .
-# Prokaryotic .
-# Cifar10 .
+# Caltech-5V
+# Prokaryotic
+# Cifar10
 # Cifar100
-Dataname = 'Cifar10'
+Dataname = 'BDGP'
 parser = argparse.ArgumentParser(description='test')
 parser.add_argument('--dataset', default=Dataname)
 parser.add_argument('--data_path', default="D:/cyy/dataset/MVC_data") # 数据存放位置
@@ -25,8 +25,10 @@ parser.add_argument("--feature_dim", default=512)
 args = parser.parse_args()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-if args.dataset in ["BDGP","Caltech-2V","Caltech-3V","Caltech-4V","Caltech-5V","Prokaryotic"]:
+if args.dataset in ["BDGP","Caltech-2V"]:
     args.feature_dim = 256
+if args.dataset == "Prokaryotic":
+    args.feature_dim = 64
 dataset, dims, view, data_size, class_num = load_data(args.dataset, args.data_path)
 model = Network(view, dims, args.feature_dim, class_num, device)
 model = model.to(device)

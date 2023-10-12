@@ -28,17 +28,18 @@ warnings.filterwarnings("ignore")
 # Prokaryotic
 # Cifar10
 # Cifar100
-Dataname = "Caltech-5V"
-# Dataname = "Caltech-" + input("dataName:  ") + "V"
+Dataname = "Prokaryotic"
 parser = argparse.ArgumentParser(description='train')
 parser.add_argument('--dataset', default=Dataname)
-parser.add_argument('--data_path', default="D:/cyy/dataset/MVC_data") # 数据存放位置
+parser.add_argument('--data_path', default="./data") # 数据存放位置
 parser.add_argument('--batch_size', default=256, type=int)
 parser.add_argument("--learning_rate", default=0.0003)
 parser.add_argument("--weight_decay", default=0.)
 parser.add_argument("--mse_epochs", default=30)
 parser.add_argument("--con_epochs", default=100)
 parser.add_argument("--temperature_l", default=1.0)
+parser.add_argument("--lamda_P", default=1.0)
+parser.add_argument("--lamda_Q", default=1.0)
 parser.add_argument("--feature_dim", default=512)
 args = parser.parse_args()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -49,40 +50,53 @@ if args.dataset == "MNIST-USPS":
     args.con_epochs = 50
     seed = 10
 if args.dataset == "BDGP":
+    args.lamda_P = 0.001
+    args.lamda_Q = 0.01
     args.feature_dim = 256
     args.mse_epochs = 250
     args.con_epochs = 20
     seed = 5
 if args.dataset == "Caltech-2V":
+    args.learning_rate = 0.0006
     args.feature_dim = 256
-    args.mse_epochs = 100
-    args.con_epochs = 150
-    seed = 200
-if args.dataset == "Caltech-3V": 
-    # 200 150
-    args.feature_dim = 256
-    args.mse_epochs = 200
-    args.con_epochs = 150
+    args.mse_epochs = 300
+    args.con_epochs = 100
     seed = 5
-if args.dataset == "Caltech-4V": 
-    args.feature_dim = 256
-    args.mse_epochs = 400
+if args.dataset == "Caltech-3V":
+    args.learning_rate = 0.0001
+    args.mse_epochs = 300
     args.con_epochs = 300
+    seed = 5
+if args.dataset == "Caltech-4V":
+    args.lamda_P = 1000
+    args.lamda_Q = 1000
+    args.learning_rate = 0.0001
+    args.mse_epochs = 200
+    args.con_epochs = 400
     seed = 10
 if args.dataset == "Caltech-5V":
-    args.mse_epochs = 500
-    args.con_epochs = 300
-    seed = 1000
-if args.dataset == "Prokaryotic": 
-    args.feature_dim = 256
-    args.mse_epochs = 100
-    args.con_epochs = 20
+    args.lamda_P = 100
+    args.lamda_Q = 1000
+    args.learning_rate = 0.00006
+    args.mse_epochs = 300
+    args.con_epochs = 200
     seed = 10
-if args.dataset == "Cifar10": 
+if args.dataset == "Prokaryotic":
+    args.lamda_P = 10
+    args.lamda_Q = 10
+    args.feature_dim = 64
+    args.mse_epochs = 100
+    args.con_epochs = 100
+    seed = 10
+if args.dataset == "Cifar10":
+    args.lamda_P = 10
+    args.lamda_Q = 1
     args.mse_epochs = 200
     args.con_epochs = 100
     seed = 5
-if args.dataset == "Cifar100": 
+if args.dataset == "Cifar100":
+    args.lamda_P = 0.01
+    args.lamda_Q = 1
     args.mse_epochs = 200
     args.con_epochs = 45
     seed = 10
@@ -114,7 +128,7 @@ def pretrain(epoch):
         tot_loss += loss.item()
     print('Epoch {}'.format(epoch), 'Loss:{:.6f}'.format(tot_loss / len(data_loader)))
 
-def contrastive_train(epoch):
+def contrastive_train(epoch,lamda_P,lamda_Q):
     tot_loss = 0.
     mse = torch.nn.MSELoss()
     for batch_idx, (xs, _, _) in enumerate(data_loader):
@@ -125,8 +139,8 @@ def contrastive_train(epoch):
         loss_list = []
         for v in range(view):
             for w in range(v+1, view):
-                loss_list.append(criterion.forward_label(Qs[v], Qs[w]))
-            loss_list.append(F.kl_div(torch.log(P),Qs[v]))
+                loss_list.append(lamda_Q * criterion.forward_label(Qs[v], Qs[w]))
+            loss_list.append(lamda_P * F.kl_div(torch.log(P),Qs[v]))
             loss_list.append(mse(xs[v], xrs[v]))
         loss = sum(loss_list)
         loss.backward()
@@ -179,7 +193,7 @@ if __name__=="__main__":
                 model.As[v].data = torch.tensor(cluster_centers).to(device)
         ##############################################
         while epoch <= args.mse_epochs + args.con_epochs:
-            loss = contrastive_train(epoch)
+            loss = contrastive_train(epoch,args.lamda_P,args.lamda_Q)
             acc, nmi, pur = valid(model, device, dataset, view, data_size, isprint=False)
             writer.writerow(["{:.4f}".format(acc), "{:.4f}".format(nmi), "{:.4f}".format(pur), "{:.4f}".format(loss), epoch - args.mse_epochs])
             if acc > max_res[0]:

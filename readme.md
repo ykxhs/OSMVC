@@ -1,4 +1,4 @@
-# VDGMVC
+# OSMVC
 ## Environment installation
 First install the training/testing environment via the following commands.
 

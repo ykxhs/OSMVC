@@ -44,14 +44,6 @@ def evaluate(label, pred):
 
 
 def inference(loader, model, device, view, data_size):
-    """
-    :return:
-    total_pred: prediction among all modalities
-    pred_vectors: predictions of each modality, list
-    labels_vector: true label
-    Hs: high-level features
-    Zs: low-level features
-    """
     model.eval()
     soft_vector = []
     target_vector = []

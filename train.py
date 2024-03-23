@@ -50,8 +50,6 @@ if args.dataset == "MNIST-USPS":
     args.con_epochs = 50
     seed = 10
 if args.dataset == "BDGP":
-    args.lamda_P = 0.001
-    args.lamda_Q = 0.01
     args.feature_dim = 256
     args.mse_epochs = 250
     args.con_epochs = 20
@@ -68,35 +66,25 @@ if args.dataset == "Caltech-3V":
     args.con_epochs = 300
     seed = 5
 if args.dataset == "Caltech-4V":
-    args.lamda_P = 1000
-    args.lamda_Q = 1000
     args.learning_rate = 0.0001
     args.mse_epochs = 200
     args.con_epochs = 400
     seed = 10
 if args.dataset == "Caltech-5V":
-    args.lamda_P = 100
-    args.lamda_Q = 1000
     args.learning_rate = 0.00006
     args.mse_epochs = 300
     args.con_epochs = 200
     seed = 10
 if args.dataset == "Prokaryotic":
-    args.lamda_P = 10
-    args.lamda_Q = 10
     args.feature_dim = 64
     args.mse_epochs = 100
     args.con_epochs = 100
     seed = 10
 if args.dataset == "Cifar10":
-    args.lamda_P = 10
-    args.lamda_Q = 1
     args.mse_epochs = 200
     args.con_epochs = 100
     seed = 5
 if args.dataset == "Cifar100":
-    args.lamda_P = 0.01
-    args.lamda_Q = 1
     args.mse_epochs = 200
     args.con_epochs = 45
     seed = 10

@@ -1,4 +1,4 @@
-# OSMVC
+# One-step multi-view clustering guided by weakened view-specific distribution
 ## Environment installation
 First install the training/testing environment via the following commands.
 

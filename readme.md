@@ -28,3 +28,16 @@ Download url:
 <https://www.aliyundrive.com/s/bwx1MLa3qC3>
 
 password: 5gf0
+
+## Citation
+If you found our work or code useful, please cite this work as follows, thank you.
+``
+@article{cai2024one,
+  title={One-step multi-view clustering guided by weakened view-specific distribution},
+  author={Cai, Yueyi and Wang, Shunfang and Wang, Junjie and Fei, Yu},
+  journal={Expert Systems with Applications},
+  pages={124021},
+  year={2024},
+  publisher={Elsevier}
+}
+``

@@ -31,7 +31,7 @@ password: 5gf0
 
 ## Citation
 If you found our work or code useful, please cite this work as follows, thank you.
-``
+```c
 @article{cai2024one,
   title={One-step multi-view clustering guided by weakened view-specific distribution},
   author={Cai, Yueyi and Wang, Shunfang and Wang, Junjie and Fei, Yu},
@@ -40,4 +40,4 @@ If you found our work or code useful, please cite this work as follows, thank yo
   year={2024},
   publisher={Elsevier}
 }
-``
+```

@@ -25,9 +25,8 @@ Due to Github upload restrictions, the training data and trained models we used 
 
 Download url:
 
-<https://www.aliyundrive.com/s/bwx1MLa3qC3>
+https://www.alipan.com/s/rvXyqRgHx4V
 
-password: 5gf0
 
 ## Citation
 If you found our work or code useful, please cite this work as follows, thank you.

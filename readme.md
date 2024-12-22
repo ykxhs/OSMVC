@@ -21,13 +21,10 @@ python test.py
 ``
 
 ## Data
-Due to Github upload restrictions, the training data and trained models we used are uploaded to Alibaba Cloud disk for download.
+Due to Github upload restrictions, the training data and trained models we used are uploaded to Baidu Cloud disk for download.
 
 Download url:
-
-https://www.alipan.com/s/rvXyqRgHx4V
-
-
+https://pan.baidu.com/s/13KIBLq8nQkWEEplVw656DA?pwd=dc59 password: dc59
 ## Citation
 If you found our work or code useful, please cite this work as follows, thank you.
 ```c
